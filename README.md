@@ -18,6 +18,11 @@ For more information on these outputs, see the [API Documentation](https://devel
 - `html_url`: The URL users can navigate to in order to view the release. For example `https://github.com/octocat/Hello-World/releases/v1.0.0`
 - `upload_url`: The URL for uploading assets to the release, which could be used by GitHub Actions for additional uses, for example the [`@actions/upload-release-asset`](https://www.github.com/actions/upload-release-asset) GitHub Action
 - `tag_name`: The git tag associated with the release. For example: `v1.1.0`
+- `name`: The name of the release
+- `body`: The body of the release
+- `draft`: Whether this release is marked as a draft or not
+- `prerelease`: Whether this release is marked as a pre-release or not
+- `author`: The author of the release
 
 ### Example workflow
 
@@ -39,8 +44,9 @@ jobs:
       - name: Get release
         id: get_release
         uses: bruceadams/get-release@v1.2.3
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          token: ${{ github.token }}
+          match: v.*-rc.*
 
       - name: Build binary
         run: cargo build --release --verbose
